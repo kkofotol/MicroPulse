@@ -43,7 +43,7 @@
     .our-project-gallery {
       column-count: 3;
       column-gap: 2rem;
-      max-width: 90vw;
+      max-width: 70vw; /* Μειώθηκε από 90vw σε 70vw για να αφήσει 15% δεξιά και αριστερά */
       margin: 5rem auto;
     }
 
@@ -160,12 +160,34 @@
       text-align: center;
     }
 
-    /* iframe μεγάλου μεγέθους */
+    /* Γραμμή με fade πάνω από το iframe */
+    .fade-line-top {
+      width: 100%;
+      height: 2px;
+      background: linear-gradient(90deg, transparent 0%, white 50%, transparent 100%);
+      margin: 2rem 0 1rem 0;
+    }
+
+    /* Γραμμή με fade κάτω από το iframe */
+    .fade-line-bottom {
+      width: 100%;
+      height: 2px;
+      background: linear-gradient(90deg, transparent 0%, white 50%, transparent 100%);
+      margin: 1rem 0 2rem 0;
+    }
+
+    /* iframe μεγάλου μεγέθους με audio enabled */
     .full-width-map {
       width: 100vw;
       height: 90vh;
       border: none;
       display: block;
+      margin: 0;
+    }
+
+    /* Wrapper για το iframe section */
+    .iframe-section {
+      width: 100%;
       margin: 2rem 0;
     }
   </style>
@@ -198,8 +220,21 @@
       </div>
     </div>
 
-    <!-- Μεγάλο iframe -->
-    <iframe class="full-width-map" src="https://editor.p5js.org/elenigeorgiadi/full/MbE8jEsvD"></iframe>
+    <!-- Iframe section με fade lines -->
+    <div class="iframe-section">
+      <!-- Άσπρη γραμμή με fade πάνω από το iframe -->
+      <div class="fade-line-top"></div>
+      
+      <!-- Iframe με audio enabled -->
+      <iframe class="full-width-map" 
+              src="https://editor.p5js.org/elenigeorgiadi/full/MbE8jEsvD" 
+              allow="autoplay; microphone; camera; midi; geolocation"
+              sandbox="allow-scripts allow-same-origin allow-forms allow-popups allow-presentation allow-top-navigation-by-user-activation">
+      </iframe>
+      
+      <!-- Άσπρη γραμμή με fade κάτω από το iframe -->
+      <div class="fade-line-bottom"></div>
+    </div>
 
     <!-- Newspaper style image gallery -->
     <div class="our-project-gallery">
@@ -260,12 +295,18 @@
   <script>
     function showPage(pageId) {
       const pages = document.querySelectorAll(".page");
+      const buttons = document.querySelectorAll(".nav button");
+      
       pages.forEach((p) => p.classList.remove("active"));
+      buttons.forEach((b) => b.classList.remove("active"));
+      
       document.getElementById(pageId).classList.add("active");
+      event.target.classList.add("active");
     }
 
+    // Αρχικοποίηση
     showPage("info");
+    document.querySelector('.nav button').classList.add('active');
   </script>
 </body>
 </html>
-
