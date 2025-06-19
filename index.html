@@ -190,6 +190,55 @@
       width: 100%;
       margin: 2rem 0;
     }
+
+    /* Inspiration grid layout */
+    .inspiration-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 2rem;
+      max-width: 80%;
+      margin: 2rem auto;
+      padding: 0 2rem;
+    }
+
+    .inspiration-grid img {
+      width: 100%;
+      height: auto;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+      transition: transform 0.3s ease;
+    }
+
+    .inspiration-grid img:hover {
+      transform: scale(1.05);
+    }
+
+    /* Video container styling */
+    .video-container {
+      position: relative;
+      width: 100%;
+      height: 0;
+      padding-bottom: 56.25%; /* 16:9 aspect ratio */
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+    }
+
+    .video-container iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    @media (max-width: 768px) {
+      .inspiration-grid {
+        grid-template-columns: 1fr;
+        max-width: 90%;
+      }
+    }
   </style>
 </head>
 <body>
@@ -279,14 +328,9 @@
   <div id="inspiration" class="page">
     <h2 class="gradient-text" style="font-size:400% ">Inspiration</h2>
     <p style="font-size: 200%; margin: 0 100px;">Inspired by the work of Casey Reas—especially pieces like MicroImage and Tissue—where simple rules lead to the creation of complex, organic forms. Having these pieces in mind, we wanted to build something that reacts not just visually, but emotionally—something that comes to life through interaction. We envision the piece as a kind of visual "score" that reacts to each keystroke, turning the user into an active creator rather than a passive observer. Music becomes a visual experience: colors, motion, and sound form the language through which the artwork communicates. In our project, the music is visualized. The way the colors flow, the particles move, the sounds shift—that's the language of the piece. It's our way of exploring how the human mind can interpret and express music, not just through sound, but through sight and interaction. We're excited to see what each person will make with it!</p>
-  </div>
-
-  <div id="inspiration" class="page">
-    <h2 class="gradient-text" style="font-size:400% ">Inspiration</h2>
-    <p style="font-size: 200%; margin: 0 100px;">Inspired by the work of Casey Reas—especially pieces like MicroImage and Tissue—where simple rules lead to the creation of complex, organic forms. Having these pieces in mind, we wanted to build something that reacts not just visually, but emotionally—something that comes to life through interaction. We envision the piece as a kind of visual "score" that reacts to each keystroke, turning the user into an active creator rather than a passive observer. Music becomes a visual experience: colors, motion, and sound form the language through which the artwork communicates. In our project, the music is visualized. The way the colors flow, the particles move, the sounds shift—that's the language of the piece. It's our way of exploring how the human mind can interpret and express music, not just through sound, but through sight and interaction. We're excited to see what each person will make with it!</p>
     
     <!-- First Section: Tissue -->
-    <h3 style="font-style: italic; font-size: 250%; margin: 3rem 0 2rem 0; text-align: center;">Tissue</h3>
+    <h3 style="font-style: italic; font-size: 250%; margin: 3rem 0 2rem 0; text-align: center; color: white;">Tissue</h3>
     <div class="inspiration-grid">
       <img src="images/t1.png" alt="Tissue artwork 1" />
       <img src="images/t2.png" alt="Tissue artwork 2" />
@@ -296,7 +340,7 @@
     <div class="fade-line-bottom"></div>
     
     <!-- Second Section: MicroImage 1 -->
-    <h3 style="font-style: italic; font-size: 250%; margin: 3rem 0 2rem 0; text-align: center;">MicroImage 1</h3>
+    <h3 style="font-style: italic; font-size: 250%; margin: 3rem 0 2rem 0; text-align: center; color: white;">MicroImage 1</h3>
     <div class="inspiration-grid">
       <div class="video-container">
         <iframe src="https://player.vimeo.com/video/81527119" 
@@ -312,7 +356,7 @@
     <div class="fade-line-bottom"></div>
     
     <!-- Third Section: MicroImage 2 -->
-    <h3 style="font-style: italic; font-size: 250%; margin: 3rem 0 2rem 0; text-align: center;">MicroImage 2</h3>
+    <h3 style="font-style: italic; font-size: 250%; margin: 3rem 0 2rem 0; text-align: center; color: white;">MicroImage 2</h3>
     <div class="inspiration-grid">
       <div class="video-container">
         <iframe src="https://player.vimeo.com/video/86532954" 
@@ -326,7 +370,7 @@
       <img src="images/t10.png" alt="MicroImage 2 artwork 3" />
     </div>
   </div>
-  
+
   <!-- Thought Process -->
   <div id="thought" class="page">
     <h2 style="font-size:400%">Thought Process</h2>
