@@ -10,6 +10,8 @@
       background-color: black;
       color: white;
       font-family: "Cute Font", sans-serif;
+      margin: 0;
+      padding: 0;
       text-align: center;
     }
 
@@ -38,11 +40,10 @@
       margin-bottom: 1rem;
     }
 
-    /* --- Newspaper style image gallery --- */
     .our-project-gallery {
       column-count: 3;
       column-gap: 2rem;
-      width: 70vw;
+      max-width: 90vw;
       margin: 5rem auto;
     }
 
@@ -71,7 +72,6 @@
     @media (max-width: 600px) {
       .our-project-gallery {
         column-count: 1;
-        width: 90vw;
       }
     }
 
@@ -136,7 +136,16 @@
     }
 
     .gradient-text {
-      background: linear-gradient(90deg, white 0%, white 100%);
+      background: linear-gradient(
+        90deg,
+        white 0%,
+        white 15%,
+        white 30%,
+        white 45%,
+        white 60%,
+        white 80%,
+        white 100%
+      );
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
@@ -151,20 +160,13 @@
       text-align: center;
     }
 
-    .interactive-note {
-      font-size: 1.5rem;
-      margin: 2rem auto;
-      color: #fbc;
-    }
-
-    .custom-iframe {
-      width: 90vw;
-      height: 600px;
-      margin: 0 auto;
+    /* iframe μεγάλου μεγέθους */
+    .full-width-map {
+      width: 100vw;
+      height: 90vh;
       border: none;
       display: block;
-      border-radius: 10px;
-      box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+      margin: 2rem 0;
     }
   </style>
 </head>
@@ -180,25 +182,26 @@
     </div>
   </div>
 
-  <!-- Our Project -->
-  <div id="info" class="container page active">
-    <div id="course_info" class="row one-top">
-      <div class="rectangle" style="font-size: 250%; color: rgb(0, 0, 0);">NTUA ARCH 4342 Computational Methods in Creative Arts and Sciences</div>
-      <div id="student_info" class="row half-bottom">
-        <h3 class="gradient-text" style="font-size: 400%;">MicroPulse</h3>
-        <p style="font-size: 200%;">We are team 05 and we created this website to showcase our work...<br><br>
-        <h6 class="gradient-text" style="font-size: 200%">We invite you to interact, experiment, and immerse yourself! Let your keyboard be the instrument! Let your imagination be the guide!</h6>
-        </p>
+  <!-- Αρχική Σελίδα -->
+  <div id="info" class="page active">
+    <div class="container">
+      <div id="course_info" class="row one-top">
+        <br />
+        <div class="rectangle" style="font-size: 250%; font-family: 'Cute Font'; color: rgb(0, 0, 0); text-align: center;">
+          NTUA ARCH 4342 Computational Methods in Creative Arts and Sciences
+        </div>
+        <div id="student_info" class="row half-bottom">
+          <h3 class="gradient-text" style="font-size: 400%;">MicroPulse</h3>
+          <p style="font-size: 200%;">We are team 05 and we created this website to showcase our work in the subject of Computer Sciences 2025. Our main goal was to create an interactive "artwork" that is shaped by the user's musical input. Our inspiration was the generative art of Casey Reas. Much like his work, our project embraces unpredictability, structure, and fluidity all at once. In general, music is vital to the artwork we have created since we wanted to highlight the connection between art and music and how our brains react to that mix. The particles on the screen represent that idea since each one moves with purpose, like thoughts or emotions triggered by music.</p>
+          <h6 class="gradient-text" style="font-size: 200%">We invite you to interact, experiment, and immerse yourself! Let your keyboard be the instrument! Let your imagination be the guide!</h6>
+        </div>
       </div>
     </div>
 
-    <!-- Instruction for sound -->
-    <p class="interactive-note">🔊 Click inside the interactive frame to activate sound.</p>
+    <!-- Μεγάλο iframe -->
+    <iframe class="full-width-map" src="https://editor.p5js.org/elenigeorgiadi/full/MbE8jEsvD"></iframe>
 
-    <!-- Interactive Frame -->
-    <iframe class="custom-iframe" src="https://editor.p5js.org/elenigeorgiadi/full/MbE8jEsvD"></iframe>
-
-    <!-- Image Gallery -->
+    <!-- Newspaper style image gallery -->
     <div class="our-project-gallery">
       <img src="images/p1.png" alt="" />
       <img src="images/1.png" alt="" />
@@ -215,7 +218,7 @@
     </div>
   </div>
 
-  <!-- Projects Evolution -->
+  <!-- Projects Page -->
   <div id="projects-page" class="page">
     <div id="projects-title">Here is a gallery of previous attempts</div>
     <div class="our-project-gallery">
@@ -237,31 +240,32 @@
     </div>
   </div>
 
-  <!-- INSPIRATION -->
+  <!-- Inspiration -->
   <div id="inspiration" class="page">
     <h2 class="gradient-text" style="font-size:400% ">Inspiration</h2>
-    <p style="font-size: 200%; margin: 0 100px;">Inspired by the work of Casey Reas... [συνέχεια όπως πριν]</p>
+    <p style="font-size: 200%; margin: 0 100px;">Inspired by the work of Casey Reas—especially pieces like MicroImage and Tissue—where simple rules lead to the creation of complex, organic forms. Having these pieces in mind, we wanted to build something that reacts not just visually, but emotionally—something that comes to life through interaction. We envision the piece as a kind of visual "score" that reacts to each keystroke, turning the user into an active creator rather than a passive observer. Music becomes a visual experience: colors, motion, and sound form the language through which the artwork communicates. In our project, the music is visualized. The way the colors flow, the particles move, the sounds shift—that's the language of the piece. It's our way of exploring how the human mind can interpret and express music, not just through sound, but through sight and interaction. We're excited to see what each person will make with it!</p>
   </div>
 
-  <!-- THOUGHT PROCESS -->
+  <!-- Thought Process -->
   <div id="thought" class="page">
-    <h2 style="font-size:400% ">Thought Process</h2>
-    <p style="font-size: 200%; margin: 0 100px;">This code creates an interactive audio-visual synthesizer... [συνέχεια όπως πριν]</p>
+    <h2 style="font-size:400%">Thought Process</h2>
+    <p style="font-size: 200%; margin: 0 100px;">This code creates an interactive audio-visual synthesizer where pressing specific keys on the keyboard or clicking on on-screen buttons plays musical notes and triggers colorful particle effects. Each note is associated with a specific sound frequency, color, and key. When a note is played, its corresponding oscillator produces a smooth sine wave sound that fades in and out. Simultaneously, particles are emitted in random directions from a random position, creating vibrant trails that follow their motion. These particles are influenced by Perlin noise to move organically and leave behind ghost trails for visual flair. A set of buttons is also generated to allow interaction, making the experience both musical and visually engaging.</p>
   </div>
 
-  <!-- DELIVERABLES -->
+  <!-- Deliverables -->
   <div id="about" class="page">
-    <h2 style="font-size:400% ">DELIVERABLES</h2>
+    <h2 style="font-size:400%">DELIVERABLES</h2>
   </div>
 
-  <!-- JavaScript -->
   <script>
     function showPage(pageId) {
       const pages = document.querySelectorAll(".page");
       pages.forEach((p) => p.classList.remove("active"));
       document.getElementById(pageId).classList.add("active");
     }
+
     showPage("info");
   </script>
 </body>
 </html>
+
