@@ -8,6 +8,8 @@
     href="https://fonts.googleapis.com/css2?family=Cute+Font&display=swap"
     rel="stylesheet"
   />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/p5.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.4.0/addons/p5.sound.min.js"></script>
   <style>
     body {
       background-color: black;
@@ -16,10 +18,7 @@
       text-align: center;
     }
 
-    h2,
-    h3,
-    h5,
-    p {
+    h2, h3, h5, p {
       text-align: center;
     }
 
@@ -44,28 +43,144 @@
       margin-bottom: 1rem;
     }
 
-    /* --- Newspaper style image gallery --- */
+    /* Piano Icon Styles */
+    .piano-section {
+      margin: 4rem 0;
+      text-align: center;
+    }
+
+    .separator-line {
+      width: 80%;
+      height: 3px;
+      background: linear-gradient(90deg, transparent, white, transparent);
+      margin: 2rem auto;
+      border-radius: 2px;
+    }
+
+    .piano-icon {
+      width: 200px;
+      height: 120px;
+      background: linear-gradient(135deg, #2c3e50, #34495e);
+      border-radius: 15px;
+      margin: 2rem auto;
+      position: relative;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 10px 30px rgba(255, 255, 255, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 2px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .piano-icon:hover {
+      transform: translateY(-5px) scale(1.05);
+      box-shadow: 0 15px 40px rgba(255, 255, 255, 0.2);
+      border-color: rgba(255, 255, 255, 0.4);
+    }
+
+    .piano-keys {
+      display: flex;
+      align-items: flex-end;
+      height: 60px;
+    }
+
+    .white-key {
+      width: 16px;
+      height: 50px;
+      background: white;
+      border: 1px solid #ddd;
+      margin: 0 1px;
+      border-radius: 0 0 3px 3px;
+    }
+
+    .black-key {
+      width: 10px;
+      height: 30px;
+      background: #333;
+      border-radius: 0 0 2px 2px;
+      margin: 0 -5px;
+      z-index: 2;
+      position: relative;
+    }
+
+    .piano-text {
+      position: absolute;
+      bottom: 8px;
+      left: 50%;
+      transform: translateX(-50%);
+      color: white;
+      font-size: 12px;
+      font-weight: bold;
+      text-shadow: 0 1px 2px rgba(0,0,0,0.5);
+    }
+
+    .play-instruction {
+      color: #bbb;
+      font-size: 150%;
+      margin-top: 1rem;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 0.7; }
+      50% { opacity: 1; }
+    }
+
+    /* Enhanced Newspaper style image gallery */
     .our-project-gallery {
       column-count: 3;
-      column-gap: 2rem;
+      column-gap: 1.5rem;
       max-width: 90vw;
-      margin: 5rem auto;
+      margin: 3rem auto;
     }
 
-    .our-project-gallery img {
+    .our-project-gallery .gallery-item {
       width: 100%;
-      height: auto;
-      margin-bottom: 1.5rem;
+      margin-bottom: 1rem;
       border-radius: 10px;
-      border: none;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+      overflow: hidden;
+      box-shadow: 0 4px 15px rgba(255, 255, 255, 0.1);
       display: block;
       break-inside: avoid;
-      transition: transform 0.3s ease;
+      transition: all 0.3s ease;
+      position: relative;
     }
 
-    .our-project-gallery img:hover {
-      transform: scale(1.05);
+    .our-project-gallery .gallery-item:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 25px rgba(255, 255, 255, 0.2);
+    }
+
+    .our-project-gallery .gallery-item img {
+      width: 100%;
+      height: auto;
+      display: block;
+      border: none;
+    }
+
+    /* Different sizes for newspaper effect */
+    .our-project-gallery .gallery-item:nth-child(3n+1) {
+      transform: scale(1.1);
+      margin-bottom: 2rem;
+    }
+
+    .our-project-gallery .gallery-item:nth-child(4n+2) {
+      transform: scale(0.9);
+    }
+
+    .our-project-gallery .gallery-item:nth-child(5n+3) {
+      transform: scale(1.15);
+      margin-bottom: 2.5rem;
+    }
+
+    .our-project-gallery .gallery-item:nth-child(6n+1) {
+      transform: scale(0.85);
+    }
+
+    .our-project-gallery .gallery-item:nth-child(7n+2) {
+      transform: scale(1.2);
+      margin-bottom: 3rem;
     }
 
     /* Responsive column counts */
@@ -79,9 +194,47 @@
       .our-project-gallery {
         column-count: 1;
       }
+      
+      .piano-icon {
+        width: 150px;
+        height: 90px;
+      }
     }
 
-    /* Navigation styles and other page styles remain unchanged */
+    /* P5.js Canvas Container */
+    #p5-container {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: black;
+      z-index: 10000;
+      display: none;
+    }
+
+    #close-piano {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: rgba(255, 255, 255, 0.2);
+      border: 2px solid white;
+      color: white;
+      padding: 10px 20px;
+      border-radius: 25px;
+      cursor: pointer;
+      font-family: 'Cute Font';
+      font-size: 18px;
+      transition: all 0.3s ease;
+      z-index: 10001;
+    }
+
+    #close-piano:hover {
+      background: rgba(255, 255, 255, 0.3);
+      transform: scale(1.05);
+    }
+
+    /* Navigation styles remain unchanged */
     .nav {
       position: fixed;
       top: 0;
@@ -95,7 +248,7 @@
 
     .nav-buttons-wrapper {
       width: 100%;
-    background: linear-gradient(
+      background: linear-gradient(
         90deg,
         #6B7B9E 0%,
         #7B6B9E 12.5%,
@@ -159,7 +312,6 @@
       text-fill-color: transparent;
     }
 
-    /* Project evolution title styling */
     #projects-title {
       font-size: 300%;
       font-family: 'Cute Font';
@@ -179,6 +331,11 @@
       <button onclick="showPage('thought', event)">Thought process</button>
       <button onclick="showPage('about', event)">Deliverables</button>
     </div>
+  </div>
+
+  <!-- P5.js Container -->
+  <div id="p5-container">
+    <button id="close-piano">✕ Close Piano</button>
   </div>
 
   <!-- Αρχική Σελίδα -->
@@ -214,31 +371,58 @@
           our brains react to that mix. The particles on the screen represent
           that idea since each one moves with purpose, like thoughts or emotions
           triggered by music.
-
-          <h6
-            class="gradient-text"
-            style="font-family: 'Cute Font'; font-size: 200%"
-          >
-            We invite you to interact, experiment, and immerse yourself! Let your
-            keyboard be the instrument! Let your imagination be the guide!
-          </h6>
         </p>
+
+        <h6
+          class="gradient-text"
+          style="font-family: 'Cute Font'; font-size: 200%"
+        >
+          We invite you to interact, experiment, and immerse yourself! Let your
+          keyboard be the instrument! Let your imagination be the guide!
+        </h6>
       </div>
     </div>
 
-    <!-- Newspaper style image gallery -->
+    <!-- Piano Interactive Section -->
+    <div class="piano-section">
+      <div class="separator-line"></div>
+      
+      <div class="piano-icon" onclick="startPiano()">
+        <div class="piano-keys">
+          <div class="white-key"></div>
+          <div class="black-key"></div>
+          <div class="white-key"></div>
+          <div class="black-key"></div>
+          <div class="white-key"></div>
+          <div class="white-key"></div>
+          <div class="black-key"></div>
+          <div class="white-key"></div>
+          <div class="black-key"></div>
+          <div class="white-key"></div>
+        </div>
+        <div class="piano-text">🎹 PLAY</div>
+      </div>
+      
+      <div class="play-instruction">
+        Click to start the interactive piano experience!
+      </div>
+      
+      <div class="separator-line"></div>
+    </div>
+
+    <!-- Enhanced Newspaper style image gallery -->
     <div class="our-project-gallery">
-      <img src="images/p1.png" alt="" />
-      <img src="images/1.png" alt="" />
-      <img src="images/2.png" alt="" />
-      <img src="images/3.png" alt="" />
-      <img src="images/para.png" alt="" />
-      <img src="images/anime.png" alt="" />
-      <img src="images/wall.png" alt="" />
-      <img src="images/night.png" alt="" />
-      <img src="images/miaou.png" alt="" />
-      <img src="images/purple.png" alt="" />
-      <img src="images/long.png" alt="" />
+      <div class="gallery-item"><img src="images/p1.png" alt="" /></div>
+      <div class="gallery-item"><img src="images/1.png" alt="" /></div>
+      <div class="gallery-item"><img src="images/2.png" alt="" /></div>
+      <div class="gallery-item"><img src="images/3.png" alt="" /></div>
+      <div class="gallery-item"><img src="images/para.png" alt="" /></div>
+      <div class="gallery-item"><img src="images/anime.png" alt="" /></div>
+      <div class="gallery-item"><img src="images/wall.png" alt="" /></div>
+      <div class="gallery-item"><img src="images/night.png" alt="" /></div>
+      <div class="gallery-item"><img src="images/miaou.png" alt="" /></div>
+      <div class="gallery-item"><img src="images/purple.png" alt="" /></div>
+      <div class="gallery-item"><img src="images/long.png" alt="" /></div>
     </div>
   </div>
 
@@ -247,26 +431,27 @@
     <div id="projects-title">Here is a gallery of previous attempts</div>
 
     <div class="our-project-gallery">
-      <img src="images/p2.png" alt="" />
-      <img src="images/p7.1.png" alt="" />
-      <img src="images/p3.png" alt="" />
-      <img src="images/p4.png" alt="" />
-      <img src="images/p5.png" alt="" />
-      <img src="images/p6.png" alt="" />
-      <img src="images/exer7.png" alt="" />
-      <img src="images/exer8.png" alt="" />
-      <img src="images/exer9.png" alt="" />
-      <img src="images/p7.png" alt="" />
-      <img src="images/p8.png" alt="" />
-      <img src="images/p9.png" alt="" />
-      <img src="images/p10.png" alt="" />
-      <img src="images/p11.png" alt="" />
-      <img src="images/p12.png" alt="" />
+      <div class="gallery-item"><img src="images/p2.png" alt="" /></div>
+      <div class="gallery-item"><img src="images/p7.1.png" alt="" /></div>
+      <div class="gallery-item"><img src="images/p3.png" alt="" /></div>
+      <div class="gallery-item"><img src="images/p4.png" alt="" /></div>
+      <div class="gallery-item"><img src="images/p5.png" alt="" /></div>
+      <div class="gallery-item"><img src="images/p6.png" alt="" /></div>
+      <div class="gallery-item"><img src="images/exer7.png" alt="" /></div>
+      <div class="gallery-item"><img src="images/exer8.png" alt="" /></div>
+      <div class="gallery-item"><img src="images/exer9.png" alt="" /></div>
+      <div class="gallery-item"><img src="images/p7.png" alt="" /></div>
+      <div class="gallery-item"><img src="images/p8.png" alt="" /></div>
+      <div class="gallery-item"><img src="images/p9.png" alt="" /></div>
+      <div class="gallery-item"><img src="images/p10.png" alt="" /></div>
+      <div class="gallery-item"><img src="images/p11.png" alt="" /></div>
+      <div class="gallery-item"><img src="images/p12.png" alt="" /></div>
     </div>
   </div>
-<!-- INSPIRATION -->
+
+  <!-- INSPIRATION -->
   <div id="inspiration" class="page">
-    <h2 class="gradient-text" style="font-size:400% ">Inspiration</h2>
+    <h2 class="gradient-text" style="font-size:400%">Inspiration</h2>
     <p style="font-size: 200%; margin-right: 100px; margin-left: 100px;">Inspired by the work of Casey Reas—especially pieces like MicroImage and Tissue—where simple rules lead to the creation of complex, organic forms. Having these pieces in mind, we wanted to build something that reacts not just visually, but emotionally—something that comes to life through interaction. We envision the piece as a kind of visual "score" that reacts to each keystroke, turning the user into an active creator rather than a passive observer. Music becomes a visual experience: colors, motion, and sound form the language through which the artwork communicates. In our project, the music is visualized. The way the colors flow, the particles move, the sounds shift—that's the language of the piece. It's our way of exploring how the human mind can interpret and express music, not just through sound, but through sight and interaction.
 
     We're excited to see what each person will make with it!</p>
@@ -274,26 +459,277 @@
 
   <!-- THOUGHT PROCESS -->
   <div id="thought" class="page">
-    <h2 style="font-size:400% ">Thought Process</h2>
+    <h2 style="font-size:400%">Thought Process</h2>
     <p style="font-size: 200%; margin-right: 100px; margin-left: 100px;">This code creates an interactive audio-visual synthesizer where pressing specific keys on the keyboard or clicking on on-screen buttons plays musical notes and triggers colorful particle effects. Each note is associated with a specific sound frequency, color, and key. When a note is played, its corresponding oscillator produces a smooth sine wave sound that fades in and out. Simultaneously, particles are emitted in random directions from a random position, creating vibrant trails that follow their motion. These particles are influenced by Perlin noise to move organically and leave behind ghost trails for visual flair. A set of buttons is also generated to allow interaction, making the experience both musical and visually engaging.</p>
   </div>
 
   <!-- DELIVERABLES -->
   <div id="about" class="page">
-    <h2 style="font-size:400% ">DELIVERABLES</h2>
+    <h2 style="font-size:400%">DELIVERABLES</h2>
   </div>
 
- 
-
   <script>
+    // P5.js code integration
+    let oscillators = [];
+    let notes = [
+      {name: 'Do', freq: 261.63, color: '#6DD0F0', key: 'A'},    
+      {name: 'Re', freq: 293.66, color: '#6AA575', key: 'S'},    
+      {name: 'Mi', freq: 329.63, color: '#9E1307', key: 'D'},    
+      {name: 'Fa', freq: 349.23, color: '#1E3196', key: 'F'},    
+      {name: 'Sol', freq: 392.00, color: '#775AFF', key: 'G'},    
+      {name: 'La', freq: 440.00, color: '#FF7', key: 'H'},        
+      {name: 'Si', freq: 493.88, color: '#FF5722', key: 'J'},    
+      {name: 'Do High', freq: 523.25, color: '#B91B65', key: 'K'}
+    ];
+
+    const comboColors = {
+      'A+D': '#E91E63',
+      'S+F': '#9C27B0',
+      'D+G': '#C71585',
+      'F+H': '#FF5722',
+      'G+J': '#3F51B5',
+      'H+K': '#009688',
+      'A+D+G':'#A58833'
+    };
+
+    let particleSources = [];
+    const MAX_GHOST_TRAILS = 200;
+    let ghostTrails = [];
+    let notePressCount = {};
+    let activeNotes = new Set();
+    let pianoActive = false;
+
+    function setup() {
+      let canvas = createCanvas(windowWidth, windowHeight);
+      canvas.parent('p5-container');
+      noiseDetail(8, 0.5);
+     
+      for (let i = 0; i < notes.length; i++) {
+        let osc = new p5.Oscillator('sine');
+        osc.freq(notes[i].freq);  
+        osc.amp(0);
+        osc.start();
+        oscillators.push(osc);
+        notePressCount[notes[i].key] = 0;
+      }
+
+      window.addEventListener('keydown', (e) => {
+        if (!pianoActive || e.repeat) return;
+        let keyPressed = e.key.toUpperCase();
+
+        if (notes.some(n => n.key === keyPressed)) {
+          notePressCount[keyPressed] = (notePressCount[keyPressed] || 0) + 1;
+          activeNotes.add(keyPressed);
+          updateParticleSources();
+          e.preventDefault();
+        }
+      });
+
+      window.addEventListener('keyup', (e) => {
+        if (!pianoActive) return;
+        let keyReleased = e.key.toUpperCase();
+        if (activeNotes.has(keyReleased)) {
+          activeNotes.delete(keyReleased);
+        }
+      });
+
+      createUIButtons();
+    }
+
+    function draw() {
+      if (!pianoActive) return;
+      
+      background(0, 0, 0, 2);
+     
+      for (let gt of ghostTrails) {
+        stroke(gt.color);
+        strokeWeight(2);
+        line(gt.prevPos.x, gt.prevPos.y, gt.pos.x, gt.pos.y);
+      }
+
+      for (let source of particleSources) {
+        for (let p of source.particles) {
+          p.update();
+          p.show();
+        }
+        source.particles = source.particles.filter(p => p.lifespan > 0);
+      }
+      
+      particleSources = particleSources.filter(source => source.particles.length > 0);
+
+      if (particleSources.length === 0 && ghostTrails.length > 0) {
+        ghostTrails.splice(0, 5);
+      }
+    }
+
+    function updateParticleSources() {
+      if (activeNotes.size === 0) return;
+
+      let keys = Array.from(activeNotes).sort().join('+');
+
+      if (comboColors[keys]) {
+        for (let k of activeNotes) {
+          let idx = notes.findIndex(n => n.key === k);
+          if (idx !== -1) playNote(idx);
+        }
+        let chosenColor = color(comboColors[keys]);
+        createParticleSource(chosenColor,2);
+      } else {
+        for (let k of activeNotes) {
+          let idx = notes.findIndex(n => n.key === k);
+          if (idx !== -1) {
+            playNote(idx);
+            createParticleSource(notes[idx].color, notePressCount[k]);
+          }
+        }
+      }
+    }
+
+    function playNote(index) {
+      oscillators[index].amp(0.5, 0.1);
+      setTimeout(() => {
+        oscillators[index].amp(0, 0.5);
+      }, 500);
+    }
+
+    function createParticleSource(colorInput, pressCount = 1) {
+      let originX = random(width);
+      let originY = random(height);
+      let directionCount = floor(random(1, 4));
+      let directions = Array.from({ length: directionCount }, () => p5.Vector.random2D());
+      let col = (typeof colorInput === 'object' && colorInput._array) ? colorInput : color(colorInput);
+      let source = { color: col, particles: [] };
+      let numParticles = 25 * pressCount;
+      let baseSpeed = 0.4 * pressCount;
+
+      for (let dir of directions) {
+        for (let i = 0; i < numParticles / directionCount; i++) {
+          let x = originX + random(-100, 100);
+          let y = originY + random(-100, 100);
+          let vel = dir.copy().setMag(random(baseSpeed * 0.5, baseSpeed)).rotate(random(-PI / 4, PI / 4));
+          source.particles.push(new Particle(x, y, col, vel));
+        }
+      }
+
+      particleSources.push(source);
+    }
+
+    function getDarkerColor(hexColor) {
+      let c = color(hexColor);
+      let r = max(red(c) - 100, 0);
+      let g = max(green(c) - 100, 0);
+      let b = max(blue(c) - 100, 0);
+      return color(r, g, b);
+    }
+
+    class Particle {
+      constructor(x, y, colorHex, velocity) {
+        this.pos = createVector(x, y);
+        this.prevPos = this.pos.copy();
+        this.vel = velocity || p5.Vector.random2D().setMag(0.5);
+        this.acc = createVector(0, 0);
+        this.maxSpeed = 2;
+        this.color = colorHex;
+        this.darkerColor = getDarkerColor(colorHex);
+        this.lifespan = 1.0;
+        this.timer = 0;
+        this.stopped = false;
+      }
+
+      update() {
+        if (!this.stopped) {
+          let angle = noise(this.pos.x * 0.01, this.pos.y * 0.01) * TWO_PI * 2;
+          let force = p5.Vector.fromAngle(angle);
+          force.setMag(0.1);
+          this.acc = force;
+          this.vel.add(this.acc);
+          this.vel.limit(this.maxSpeed);
+          this.prevPos = this.pos.copy();
+          this.pos.add(this.vel);
+          ghostTrails.push({ prevPos: this.prevPos.copy(), pos: this.pos.copy(), color: this.darkerColor });
+
+          if (ghostTrails.length > MAX_GHOST_TRAILS) ghostTrails.shift();
+
+          if (this.pos.x < 0 || this.pos.x > width || this.pos.y < 0 || this.pos.y > height) {
+            this.stopped = true;
+          }
+        }
+
+        if (this.stopped) {
+          this.lifespan -= 0.02;
+        }
+
+        this.lifespan = constrain(this.lifespan, 0, 1);
+      }
+
+      show() {
+        if (this.lifespan <= 0) return;
+        stroke(red(this.color), green(this.color), blue(this.color), this.lifespan * 255);
+        strokeWeight(2);
+        point(this.pos.x, this.pos.y);
+      }
+    }
+
+    function createUIButtons() {
+      let buttonContainer = createDiv().style('display', 'flex').style('gap', '8px').style('padding', '10px');
+      buttonContainer.position(10, height - 60);
+
+      for (let i = 0; i < notes.length; i++) {
+        let btn = createButton(`${notes[i].name} (${notes[i].key})`);
+        btn.style('background-color', notes[i].color);
+        btn.style('color', '#000');
+        
+        btn.mousePressed(() => {
+          if (!pianoActive) return;
+          notePressCount[notes[i].key]++;
+          playNote(i);
+          createParticleSource(notes[i].color, notePressCount[notes[i].key]);
+        });
+
+        buttonContainer.child(btn);
+      }
+    }
+
+    // Website functionality
     function showPage(pageId) {
       const pages = document.querySelectorAll(".page");
       pages.forEach((p) => p.classList.remove("active"));
       document.getElementById(pageId).classList.add("active");
     }
 
-    // Show initial page
-    showPage("info");
+    function startPiano() {
+      pianoActive = true;
+      document.getElementById('p5-container').style.display = 'block';
+      resizeCanvas(windowWidth, windowHeight);
+    }
+
+    function closePiano() {
+      pianoActive = false;
+      document.getElementById('p5-container').style.display = 'none';
+      
+      // Clear all particles and sounds
+      particleSources = [];
+      ghostTrails = [];
+      activeNotes.clear();
+      
+      // Stop all oscillators
+      for (let i = 0; i < oscillators.length; i++) {
+        oscillators[i].amp(0, 0.1);
+      }
+    }
+
+    document.getElementById('close-piano').addEventListener('click', closePiano);
+
+    // Initialize website
+    window.addEventListener('load', () => {
+      showPage("info");
+    });
+
+    function windowResized() {
+      if (pianoActive) {
+        resizeCanvas(windowWidth, windowHeight);
+      }
+    }
   </script>
 </body>
 </html>
