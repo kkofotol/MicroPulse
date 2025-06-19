@@ -233,10 +233,42 @@
       border: none;
     }
 
+    /* Full width video container for YouTube videos */
+    .fullscreen-video-container {
+      position: relative;
+      width: 100vw;
+      height: 60vh;
+      margin: 2rem 0;
+      overflow: hidden;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
+    }
+
+    .fullscreen-video-container iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    /* Music title styling */
+    .music-title {
+      font-style: italic;
+      font-size: 250%;
+      margin: 3rem 0 2rem 0;
+      text-align: center;
+      color: white;
+    }
+
     @media (max-width: 768px) {
       .inspiration-grid {
         grid-template-columns: 1fr;
         max-width: 90%;
+      }
+      
+      .fullscreen-video-container {
+        height: 40vh;
       }
     }
   </style>
@@ -375,8 +407,36 @@
   <div id="thought" class="page">
     <h2 style="font-size:400%">Thought Process</h2>
     <p style="font-size: 200%; margin: 0 100px;">This code creates an interactive audio-visual synthesizer where pressing specific keys on the keyboard or clicking on on-screen buttons plays musical notes and triggers colorful particle effects. Each note is associated with a specific sound frequency, color, and key. When a note is played, its corresponding oscillator produces a smooth sine wave sound that fades in and out. Simultaneously, particles are emitted in random directions from a random position, creating vibrant trails that follow their motion. These particles are influenced by Perlin noise to move organically and leave behind ghost trails for visual flair. A set of buttons is also generated to allow interaction, making the experience both musical and visually engaging.</p>
+    
+    <!-- No Surprises - Radiohead -->
+    <h3 class="music-title">No Surprises - Radiohead</h3>
+    <div class="fullscreen-video-container">
+      <iframe src="https://www.youtube.com/embed/eMJ8A-wOBZ0" 
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+              allowfullscreen>
+      </iframe>
+    </div>
+    <div class="fade-line-bottom"></div>
+    
+    <!-- Ode to Joy - Ludwig van Beethoven -->
+    <h3 class="music-title">Ode to Joy - Ludwig van Beethoven</h3>
+    <div class="fullscreen-video-container">
+      <iframe src="https://www.youtube.com/embed/vNkOgGGKe9A" 
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+              allowfullscreen>
+      </iframe>
+    </div>
+    <div class="fade-line-bottom"></div>
+    
+    <!-- The Sound of Music -->
+    <h3 class="music-title">The Sound of Music</h3>
+    <div class="fullscreen-video-container">
+      <iframe src="https://www.youtube.com/embed/1CUlTtDkpbc" 
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+              allowfullscreen>
+      </iframe>
+    </div>
   </div>
-
 
   <!-- Deliverables -->
   <div id="about" class="page">
